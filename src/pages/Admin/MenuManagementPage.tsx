@@ -18,7 +18,7 @@ import { MenuItem, MenuItemCategory } from "../../types";
 import styles from "../styles/ManagementPage.module.css";
 
 const MenuManagementPage: React.FC = () => {
-  const [items, setItems] = useState<MenuItem[]>([]); // Inisialisasi array kosong
+  const [items, setItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -37,24 +37,21 @@ const MenuManagementPage: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      // FIX: Gunakan limit yang valid (misal 100) atau jangan kirim jika belum perlu pagination
       const response = await getMenuItems({ limit: 100 });
-      // FIX: Cek respons sebelum akses .data
       if (response && response.data) {
         setItems(response.data);
       } else {
-        setItems([]); // Set array kosong jika data tidak valid
+        setItems([]);
         setError("Received invalid data structure for menu items.");
       }
     } catch (err: any) {
-      // Tangkap error spesifik jika perlu
       console.error("Fetch menu items error:", err);
       setError(
         `Failed to load menu items: ${
           err.response?.data?.message || err.message || "Unknown error"
         }`
       );
-      setItems([]); // Set array kosong jika fetch gagal
+      setItems([]);
     } finally {
       setLoading(false);
     }
@@ -70,6 +67,7 @@ const MenuManagementPage: React.FC = () => {
     const { name, value, type } = e.target;
     let processedValue: string | number | boolean = value;
     if (type === "number") {
+      // Handle empty string for number input before parsing
       processedValue = value === "" ? "" : parseFloat(value);
     } else if (type === "checkbox") {
       processedValue = (e.target as HTMLInputElement).checked;
@@ -88,7 +86,7 @@ const MenuManagementPage: React.FC = () => {
       is_available: true,
       image_url: "",
     });
-    setError(null); // Bersihkan error form
+    setError(null);
   };
 
   const handleAddNew = () => {
@@ -98,10 +96,11 @@ const MenuManagementPage: React.FC = () => {
 
   const handleEdit = (item: MenuItem) => {
     setCurrentItem(item);
+    // Pastikan price dikonversi ke number jika perlu dan handle null/undefined description/image_url
     setFormData({
       name: item.name,
       description: item.description || "",
-      price: item.price,
+      price: Number(item.price), // Ensure price is a number for the form
       category: item.category,
       is_available: item.is_available,
       image_url: item.image_url || "",
@@ -127,20 +126,26 @@ const MenuManagementPage: React.FC = () => {
 
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const currentFormError = null; // Reset error form lokal
+    // const currentFormError = null; // REMOVED: This variable was declared but never used. Using setError state instead.
+    setError(null); // Clear previous form errors from state
 
+    // Validate required fields and price
     if (
       !formData.name ||
-      formData.price == null ||
-      formData.price <= 0 ||
+      formData.price === "" || // Check for empty string explicitly for price
+      Number(formData.price) <= 0 ||
       !formData.category
     ) {
-      setError("Name, positive Price, and Category are required."); // Set error state
+      setError("Name, a positive Price, and Category are required.");
       return;
     }
 
     setIsSubmitting(true);
-    const payload = { ...formData };
+    // Ensure price is sent as a number
+    const payload = {
+      ...formData,
+      price: Number(formData.price),
+    };
 
     try {
       let message = "";
@@ -156,7 +161,7 @@ const MenuManagementPage: React.FC = () => {
       alert(message);
     } catch (err: any) {
       console.error("Save menu item error:", err);
-      setError(err.response?.data?.message || "Failed to save menu item."); // Set error state
+      setError(err.response?.data?.message || "Failed to save menu item.");
     } finally {
       setIsSubmitting(false);
     }
@@ -179,10 +184,9 @@ const MenuManagementPage: React.FC = () => {
       {isFormVisible && (
         <div className={styles.formContainer}>
           <h3>{currentItem ? "Edit" : "Add New"} Menu Item</h3>
-          {/* Tampilkan error state di sini */}
+          {/* Display the error state if it exists */}
           {error && <p className="alert alert-danger">{error}</p>}
           <form onSubmit={handleFormSubmit}>
-            {/* ... input fields (name, description, price, category, image_url, is_available) ... */}
             <div className="form-group">
               <label htmlFor="name">Name *</label>
               <input
@@ -214,13 +218,14 @@ const MenuManagementPage: React.FC = () => {
                 type="number"
                 id="price"
                 name="price"
-                value={formData.price}
+                value={formData.price} // Value can be string or number here
                 onChange={handleInputChange}
                 required
                 step="0.01"
-                min="0.01"
+                min="0.01" // Browser validation, JS validation handles > 0
                 className="form-control"
                 disabled={isSubmitting}
+                placeholder="e.g., 4.50"
               />
             </div>
             <div className="form-group">
@@ -234,7 +239,7 @@ const MenuManagementPage: React.FC = () => {
                 className="form-control"
                 disabled={isSubmitting}
               >
-                {/* Default option ditambahkan */}
+                {/* Ensure default matches initial state */}
                 <option value={MenuItemCategory.OTHER}>Other</option>
                 <option value={MenuItemCategory.HOT}>Hot</option>
                 <option value={MenuItemCategory.COLD}>Cold</option>
@@ -251,6 +256,7 @@ const MenuManagementPage: React.FC = () => {
                 onChange={handleInputChange}
                 className="form-control"
                 disabled={isSubmitting}
+                placeholder="https://example.com/image.jpg"
               />
             </div>
             <div
@@ -261,7 +267,7 @@ const MenuManagementPage: React.FC = () => {
                 type="checkbox"
                 id="is_available"
                 name="is_available"
-                checked={formData.is_available ?? true}
+                checked={formData.is_available ?? true} // Default checked if undefined
                 onChange={handleInputChange}
                 style={{ marginRight: "0.5rem", width: "auto" }}
                 disabled={isSubmitting}
@@ -291,7 +297,7 @@ const MenuManagementPage: React.FC = () => {
         </div>
       )}
 
-      {/* Tampilkan error fetch utama di sini */}
+      {/* Display main fetch error */}
       {loading && <p>Loading menu...</p>}
       {!loading && error && !isFormVisible && (
         <p className="alert alert-danger">{error}</p>
@@ -303,7 +309,6 @@ const MenuManagementPage: React.FC = () => {
       {!loading && items.length > 0 && (
         <div style={{ overflowX: "auto" }}>
           <table className={styles.dataTable}>
-            {/* ... thead dan tbody tabel ... */}
             <thead>
               <tr>
                 <th>ID</th>

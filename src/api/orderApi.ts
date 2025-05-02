@@ -5,7 +5,7 @@ import {
   CreateOrderPayload,
   PaginatedResponse,
   OrderStatus,
-  OrderDetail, // Tambahkan OrderDetail jika belum ada
+  // OrderDetail, // REMOVED: OrderDetail was imported but never used in this file.
 } from "../types";
 
 // --- DTO Types ---
@@ -21,7 +21,7 @@ interface OrderQueryParams {
   userId?: number;
 }
 
-// --- Implementasi Fungsi yang Sebelumnya Hilang ---
+// --- Implementasi Fungsi ---
 
 export const createOrder = async (
   payload: CreateOrderPayload
@@ -34,6 +34,7 @@ export const createOrder = async (
   const orderData = response.data;
   if (orderData) {
     orderData.total_price = Number(orderData.total_price);
+    // Pastikan orderDetails ada dan merupakan array sebelum map
     orderData.orderDetails = Array.isArray(orderData.orderDetails)
       ? orderData.orderDetails.map((detail) => ({
           ...detail,
@@ -56,15 +57,14 @@ export const getOrders = async (
     );
     console.log("API: Raw response from GET /orders:", response);
 
-    // FIX: Lakukan pengecekan ketat pada struktur respons
     if (
       response &&
       response.data &&
       Array.isArray(response.data.data) &&
       typeof response.data.total === "number"
     ) {
-      // Proses data di dalam array
       response.data.data = response.data.data.map((order) => {
+        // Pastikan orderDetails ada dan merupakan array sebelum map
         const details = Array.isArray(order.orderDetails)
           ? order.orderDetails.map((detail) => ({
               ...detail,
@@ -82,12 +82,11 @@ export const getOrders = async (
         "API: Processed response data for GET /orders:",
         response.data
       );
-      return response.data; // Kembalikan data yang sudah diproses
+      return response.data;
     } else {
-      // Jika struktur tidak sesuai, log error dan kembalikan struktur default kosong
       console.error(
         "API: Invalid data structure received from GET /orders:",
-        response
+        response?.data // Log data jika ada, untuk debug
       );
       return {
         data: [],
@@ -98,7 +97,6 @@ export const getOrders = async (
     }
   } catch (error) {
     console.error("API: Error fetching GET /orders:", error);
-    // Lempar ulang error agar bisa ditangkap oleh komponen pemanggil
     throw error;
   }
 };
@@ -108,10 +106,10 @@ export const getOrderById = async (id: number): Promise<Order> => {
   const response = await axiosInstance.get<Order>(`/orders/${id}`);
   console.log(`API: Response from GET /orders/${id}:`, response);
 
-  // Lakukan konversi dan pengecekan setelah menerima respons
   const orderData = response.data;
   if (orderData) {
     orderData.total_price = Number(orderData.total_price);
+    // Pastikan orderDetails ada dan merupakan array sebelum map
     orderData.orderDetails = Array.isArray(orderData.orderDetails)
       ? orderData.orderDetails.map((detail) => ({
           ...detail,
@@ -120,7 +118,7 @@ export const getOrderById = async (id: number): Promise<Order> => {
         }))
       : [];
   }
-  return orderData || ({} as Order); // Kembalikan objek kosong jika response.data null/undefined
+  return orderData || ({} as Order);
 };
 
 export const cancelOrder = async (id: number): Promise<Order> => {
@@ -128,10 +126,10 @@ export const cancelOrder = async (id: number): Promise<Order> => {
   const response = await axiosInstance.patch<Order>(`/orders/${id}/cancel`);
   console.log(`API: Response from PATCH /orders/${id}/cancel:`, response);
 
-  // Lakukan konversi dan pengecekan setelah menerima respons
   const orderData = response.data;
   if (orderData) {
     orderData.total_price = Number(orderData.total_price);
+    // Pastikan orderDetails ada dan merupakan array sebelum map
     orderData.orderDetails = Array.isArray(orderData.orderDetails)
       ? orderData.orderDetails.map((detail) => ({
           ...detail,
@@ -140,7 +138,7 @@ export const cancelOrder = async (id: number): Promise<Order> => {
         }))
       : [];
   }
-  return orderData || ({} as Order); // Kembalikan objek kosong jika response.data null/undefined
+  return orderData || ({} as Order);
 };
 
 // --- FUNGSI CRUD ADMIN ---
@@ -155,10 +153,10 @@ export const updateOrderStatus = async (
   );
   console.log(`API: Response from PATCH /orders/${id}/status:`, response);
 
-  // Lakukan konversi dan pengecekan setelah menerima respons
   const orderData = response.data;
   if (orderData) {
     orderData.total_price = Number(orderData.total_price);
+    // Pastikan orderDetails ada dan merupakan array sebelum map
     orderData.orderDetails = Array.isArray(orderData.orderDetails)
       ? orderData.orderDetails.map((detail) => ({
           ...detail,
@@ -167,7 +165,7 @@ export const updateOrderStatus = async (
         }))
       : [];
   }
-  return orderData || ({} as Order); // Kembalikan objek kosong jika response.data null/undefined
+  return orderData || ({} as Order);
 };
 
 export const deleteOrder = async (id: number): Promise<void> => {

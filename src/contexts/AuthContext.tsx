@@ -6,14 +6,14 @@ import React, {
   useCallback,
 } from "react";
 import { jwtDecode } from "jwt-decode";
-import { DecodedJwtPayload, User, AuthState } from "../types";
+// import { DecodedJwtPayload, AuthState, User } from "../types"; // REMOVED: User type import, as it's implicitly handled via AuthState
+import { DecodedJwtPayload, AuthState } from "../types";
 import { getProfile } from "../api/userApi";
-import { loginUser as apiLogin } from "../api/authApi"; // Rename import
+// import { loginUser as apiLogin } from "../api/authApi"; // REMOVED: apiLogin was imported but never used in this file. Login happens outside this context.
 
 interface AuthContextProps extends AuthState {
   login: (token: string) => Promise<void>;
   logout: () => void;
-  // Tidak perlu manual check token, handle saat API call gagal
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -27,24 +27,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isAuthenticated: false,
     user: null,
     token: null,
-    isLoading: true, // Mulai dengan loading true untuk cek token awal
+    isLoading: true,
   });
 
   const loadUserFromToken = useCallback(async (token: string) => {
     setAuthState((prev) => ({ ...prev, isLoading: true }));
     try {
       const decoded = jwtDecode<DecodedJwtPayload>(token);
-      // Cek expiry (opsional, backend akan memvalidasi juga)
       const now = Date.now() / 1000;
       if (decoded.exp < now) {
         throw new Error("Token expired");
       }
 
-      // Set token di state dan localStorage
       localStorage.setItem("coffeeToken", token);
 
-      // Ambil profile user dari API menggunakan token yg sudah di header via interceptor
-      const userProfile = await getProfile();
+      const userProfile = await getProfile(); // Assumes getProfile uses the token set in axios interceptor
 
       setAuthState({
         isAuthenticated: true,
@@ -54,7 +51,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
     } catch (error) {
       console.error("Failed to load user from token:", error);
-      localStorage.removeItem("coffeeToken"); // Hapus token invalid
+      localStorage.removeItem("coffeeToken");
       setAuthState({
         isAuthenticated: false,
         user: null,
@@ -69,12 +66,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (token) {
       loadUserFromToken(token);
     } else {
-      setAuthState((prev) => ({ ...prev, isLoading: false })); // Selesai loading jika tidak ada token
+      setAuthState((prev) => ({ ...prev, isLoading: false }));
     }
   }, [loadUserFromToken]);
 
   const login = async (token: string) => {
-    await loadUserFromToken(token); // Gunakan fungsi yang sama untuk memuat user setelah login
+    await loadUserFromToken(token);
   };
 
   const logout = () => {
@@ -85,7 +82,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       token: null,
       isLoading: false,
     });
-    // Redirect atau tindakan lain bisa dilakukan di komponen pemanggil
   };
 
   return (
