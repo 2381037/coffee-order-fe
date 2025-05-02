@@ -1,0 +1,104 @@
+/* src/components/Navbar/Navbar.module.css */
+.navbar {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  height: var(--navbar-height);
+  position: fixed; /* Atau sticky */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+}
+
+.navbarContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color); /* Warna hijau untuk logo */
+}
+
+.navMenu {
+  display: flex;
+  align-items: center;
+}
+
+.navMenu li {
+  margin-left: 1.5rem;
+}
+
+.navMenu a {
+  color: var(--text-color);
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.navMenu a:hover {
+  color: var(--primary-color);
+}
+
+/* Indikator link aktif bisa ditambahkan dengan NavLink dari react-router-dom */
+.navMenu a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.navMenu a:hover::after {
+  width: 100%;
+}
+
+.logoutButton {
+  background: none;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.logoutButton:hover {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+}
+
+.cartLink {
+  position: relative;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  background-color: var(--danger-color);
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Tambahkan style untuk mobile (misal: burger menu) jika diperlukan */
+@media (max-width: 768px) {
+  .navMenu {
+    /* Sembunyikan menu biasa di mobile, tampilkan tombol burger */
+    /* Implementasi burger menu memerlukan state dan logika tambahan */
+    display: none;
+  }
+  /* Tambahkan style untuk burger icon dan mobile menu */
+}

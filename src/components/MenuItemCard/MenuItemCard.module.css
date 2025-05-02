@@ -1,0 +1,76 @@
+/* src/components/MenuItemCard/MenuItemCard.module.css */
+.card {
+  background-color: var(--bg-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.image {
+  width: 100%;
+  height: 200px; /* Sesuaikan tinggi gambar */
+  object-fit: cover; /* Agar gambar mengisi area tanpa distorsi */
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 200px;
+  background-color: var(--light-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dark-gray);
+  font-style: italic;
+}
+
+.content {
+  padding: 1rem;
+  flex-grow: 1; /* Agar konten mengisi sisa ruang */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Dorong footer ke bawah */
+}
+
+.name {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.description {
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+  margin-bottom: 1rem;
+  flex-grow: 1; /* Biarkan deskripsi mengisi ruang */
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Dorong footer ke bawah */
+}
+
+.price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--primary-dark);
+}
+
+.addButton {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+.unavailable {
+  font-size: 0.9rem;
+  color: var(--danger-color);
+  font-style: italic;
+}

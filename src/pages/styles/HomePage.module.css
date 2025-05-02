@@ -1,0 +1,56 @@
+/* src/pages/styles/HomePage.module.css */
+.homeContainer {
+  /* Style container halaman home jika perlu */
+}
+
+.hero {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("/src/assets/coffee-bg.jpg") no-repeat center center/cover; /* Ganti dengan path gambar background Anda di src/assets */
+  color: white;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500; /* Sedikit lebih tipis */
+}
+
+.hero .highlight {
+  font-weight: bold;
+  color: var(--secondary-color); /* Aksen kuning */
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.hero .subtitle {
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.featured {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.featured h2 {
+  margin-bottom: 1.5rem;
+  color: var(--primary-dark);
+}
+
+.placeholder {
+  color: var(--dark-gray);
+  font-style: italic;
+}

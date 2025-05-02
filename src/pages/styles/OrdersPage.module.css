@@ -1,0 +1,95 @@
+/* src/pages/styles/OrdersPage.module.css */
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary-dark);
+}
+
+.orderList {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.orderCard {
+  background-color: var(--bg-color);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--light-gray);
+  padding-bottom: 0.8rem;
+}
+
+.orderHeader h3 {
+  margin: 0;
+  color: var(--primary-dark);
+}
+
+.status {
+  font-weight: bold;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px; /* Pill shape */
+  font-size: 0.85rem;
+  text-transform: capitalize;
+}
+
+/* Warna status */
+.statusPending {
+  background-color: #ffc107;
+  color: #333;
+}
+.statusProcessing {
+  background-color: #2196f3;
+  color: white;
+}
+.statusCompleted {
+  background-color: var(--primary-color);
+  color: white;
+}
+.statusCancelled {
+  background-color: var(--dark-gray);
+  color: white;
+}
+
+.orderCard p {
+  margin-bottom: 0.5rem;
+  color: var(--dark-gray);
+  font-size: 0.95rem;
+}
+.orderCard p strong {
+  color: var(--text-color);
+}
+
+.orderDetails {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--light-gray);
+}
+
+.orderDetails h4 {
+  margin-bottom: 0.5rem;
+}
+
+.orderDetails ul {
+  list-style: disc;
+  margin-left: 1.2rem;
+}
+
+.orderDetails li {
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+}
+
+.cancelButton {
+  margin-top: 1rem;
+  float: right; /* Posisikan di kanan bawah kartu */
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+}

@@ -1,0 +1,122 @@
+/* src/pages/styles/ManagementPage.module.css */
+
+/* Form Container styling */
+.formContainer {
+  background-color: #fdfdfd; /* Slightly off-white */
+  border: 1px solid var(--light-gray);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
+}
+
+.formContainer h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--primary-dark);
+  border-bottom: 1px solid var(--light-gray);
+  padding-bottom: 0.8rem;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Data Table Styling */
+.dataTable {
+  width: 100%;
+  border-collapse: collapse; /* Removes space between borders */
+  margin-top: 1rem;
+  background-color: var(--bg-color);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden; /* Helps with border-radius */
+  border: 1px solid var(--light-gray); /* Add a subtle border */
+}
+
+.dataTable th,
+.dataTable td {
+  border-bottom: 1px solid var(--light-gray); /* Only bottom border for rows */
+  padding: 0.9rem 1.1rem; /* Slightly more padding */
+  text-align: left;
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+.dataTable th {
+  background-color: #f8f9fa; /* Lighter header */
+  color: var(--primary-dark);
+  font-weight: 600; /* Slightly bolder */
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.dataTable tbody tr:last-child td {
+  border-bottom: none; /* Remove border for last row */
+}
+
+.dataTable tbody tr:hover {
+  background-color: #f1f5f8; /* Subtle hover */
+}
+
+/* Action Buttons styling */
+.actionButton {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  transition: opacity 0.2s ease;
+}
+.actionButton:last-child {
+  margin-right: 0;
+}
+.actionButton:hover {
+  opacity: 0.85;
+}
+
+.editButton {
+  background-color: var(--secondary-color); /* Kuning */
+  color: #333; /* Teks gelap agar kontras */
+}
+
+.deleteButton {
+  background-color: var(--danger-color); /* Merah */
+}
+
+/* Select Dropdowns styling */
+.roleSelect,
+.statusSelect {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  min-width: 110px;
+  cursor: pointer;
+}
+
+/* Status select background styling (optional) */
+.statusSelectPending {
+  background-color: #fff9c4;
+  border-color: #ffeb3b;
+}
+.statusSelectProcessing {
+  background-color: #e3f2fd;
+  border-color: #90caf9;
+}
+.statusSelectCompleted {
+  background-color: #e8f5e9;
+  border-color: #a5d6a7;
+}
+.statusSelectCancelled {
+  background-color: #f1f1f1;
+  border-color: #bdbdbd;
+}

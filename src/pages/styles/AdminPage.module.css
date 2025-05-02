@@ -1,0 +1,51 @@
+/* src/pages/styles/AdminPage.module.css */
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary-dark);
+}
+
+.adminContainer {
+  /* Style container admin jika perlu */
+}
+
+.adminNav {
+  background-color: var(--bg-color);
+  margin-bottom: 2rem;
+  padding: 0.5rem 0;
+  border-radius: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.adminNav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem; /* Jarak antar link */
+}
+
+.adminNav a {
+  color: var(--dark-gray);
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-bottom: 3px solid transparent; /* Placeholder untuk border aktif */
+  transition: color 0.2s ease, border-bottom-color 0.2s ease;
+}
+
+.adminNav a:hover {
+  color: var(--primary-color);
+}
+
+.adminNav .activeLink {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  font-weight: bold;
+}
+
+.adminContent {
+  background-color: var(--bg-color);
+  padding: 1.5rem;
+  border-radius: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  min-height: 300px; /* Beri tinggi minimal */
+}

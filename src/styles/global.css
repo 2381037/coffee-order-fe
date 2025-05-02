@@ -1,0 +1,156 @@
+/* src/styles/global.css */
+
+/* Reset Dasar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f4f4f4;
+}
+
+/* Variabel Warna (Inspirasi Hijau) */
+:root {
+  --primary-color: #4caf50; /* Hijau utama */
+  --primary-dark: #388e3c;
+  --primary-light: #c8e6c9;
+  --secondary-color: #ffc107; /* Aksen Kuning/Emas */
+  --text-color: #333;
+  --text-light: #f4f4f4;
+  --bg-color: #ffffff;
+  --light-gray: #e0e0e0;
+  --dark-gray: #666;
+  --danger-color: #f44336;
+  --max-width: 1100px;
+  --navbar-height: 60px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Utilities */
+.container {
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 0 1.5rem;
+  overflow: hidden; /* Clear floats */
+}
+
+.page-container {
+  padding-top: calc(var(--navbar-height) + 20px); /* Space below fixed navbar */
+  padding-bottom: 20px;
+  min-height: calc(100vh - var(--navbar-height)); /* Minimal tinggi halaman */
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.m-1 {
+  margin: 0.5rem;
+}
+.my-1 {
+  margin: 0.5rem 0;
+}
+/* Tambahkan margin/padding utils lain jika perlu */
+
+/* Tombol Dasar (Style lebih lanjut di Button.module.css) */
+.button {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease-in;
+  text-align: center;
+}
+
+.button-primary {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+}
+
+.button-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.button-secondary {
+  background-color: var(--light-gray);
+  color: var(--text-color);
+}
+.button-secondary:hover {
+  background-color: var(--dark-gray);
+  color: var(--text-light);
+}
+
+.button-danger {
+  background-color: var(--danger-color);
+  color: var(--text-light);
+}
+.button-danger:hover {
+  opacity: 0.9;
+}
+
+/* Form Dasar (Style lebih lanjut di komponen/module) */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.alert {
+  padding: 0.8rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  opacity: 0.9;
+}
+.alert-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+.alert-success {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+/* Responsiveness Dasar */
+/* Tambahkan media queries spesifik di komponen jika perlu */
